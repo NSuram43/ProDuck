@@ -1,7 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+/* Custom utilities and styles */
 @layer utilities {
   .toast-enter {
     animation: toast-in 250ms ease-out both;
