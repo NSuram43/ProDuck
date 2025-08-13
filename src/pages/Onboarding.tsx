@@ -38,13 +38,13 @@ export default function Onboarding() {
   return (
     <section className="max-w-2xl mx-auto">
       <h1 className="text-2xl font-semibold">Welcome to Pro Duck</h1>
-      <p className="mt-1 text-gray-600">Let’s personalize your experience.</p>
+      <p className="mt-1 text-gray-600 dark:text-gray-400">Let’s personalize your experience.</p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Primary focus</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Primary focus</label>
           <select
-            className="mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
             value={local.focus}
             onChange={(e) => setLocal((prev) => ({ ...prev, focus: e.target.value }))}
           >
@@ -58,26 +58,26 @@ export default function Onboarding() {
         </div>
 
         <div>
-          <div className="text-sm font-medium text-gray-700">Preferred habits</div>
+          <div className="text-sm font-medium text-gray-700 dark:text-gray-300">Preferred habits</div>
           <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
             {allHabits.map((h) => (
-              <label key={h.id} className="flex items-center gap-2 rounded border p-2 cursor-pointer select-none">
+              <label key={h.id} className="flex items-center gap-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   className="h-4 w-4 accent-sky-600"
                   checked={local.preferredHabits.includes(h.id)}
                   onChange={() => toggleHabit(h.id)}
                 />
-                <span className="text-sm">{h.title}</span>
+                <span className="text-sm text-gray-800 dark:text-gray-200">{h.title}</span>
               </label>
             ))}
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Anything else?</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Anything else?</label>
           <textarea
-            className="mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
             rows={4}
             placeholder="Share a note with your future self."
             value={local.note}

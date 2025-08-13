@@ -34,19 +34,19 @@ export default function Stats() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Stats</h1>
-        <p className="mt-1 text-gray-600">Your scores and recent progress.</p>
+        <p className="mt-1 text-gray-600 dark:text-gray-400">Your scores and recent progress.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white border rounded-lg p-4">
-          <div className="text-sm text-gray-500">Today’s score</div>
-          <div className="mt-2 text-3xl font-bold text-sky-700">{todayTotal} pts</div>
-          <div className="text-xs text-gray-500">Auto-updates until you submit</div>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+          <div className="text-sm text-gray-500 dark:text-gray-400">Today’s score</div>
+          <div className="mt-2 text-3xl font-bold text-sky-700 dark:text-sky-400">{todayTotal} pts</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400">Auto-updates until you submit</div>
         </div>
-        <div className="bg-white border rounded-lg p-4 sm:col-span-2">
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 sm:col-span-2">
           <div className="flex items-center justify-between">
             <div className="font-medium">Last 7 days</div>
-            <div className="text-sm text-gray-500">Total {last7Total} pts</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Total {last7Total} pts</div>
           </div>
           <DailyScoresChart data={last7} />
         </div>

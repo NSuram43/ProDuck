@@ -78,22 +78,22 @@ export default function Habits() {
       <div className="flex items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold">Habits</h1>
-          <p className="mt-1 text-gray-600">Track your daily habits.</p>
+          <p className="mt-1 text-gray-600 dark:text-gray-400">Track your daily habits.</p>
         </div>
         <div className={`text-right ${pulse ? 'success-pulse rounded-md px-2' : ''}`}>
-          <div className="text-sm text-gray-500">Today</div>
-          <div className="text-2xl font-bold text-sky-700">{Math.round(totalScore)} pts</div>
-          <div className="text-xs text-gray-500">Submit to save and get motivation</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">Today</div>
+          <div className="text-2xl font-bold text-sky-700 dark:text-sky-400">{Math.round(totalScore)} pts</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400">Submit to save and get motivation</div>
         </div>
       </div>
 
       {categories.map((cat) => (
-        <div key={cat} className="bg-white rounded-lg border shadow-sm">
-          <div className="px-4 py-2 border-b font-medium flex items-center justify-between">
+        <div key={cat} className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-800 font-medium flex items-center justify-between">
             <span>{cat}</span>
-            <span className="text-xs text-gray-500">{habitsByCategory[cat]?.length ?? 0} items</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{habitsByCategory[cat]?.length ?? 0} items</span>
           </div>
-          <div className="divide-y">
+          <div className="divide-y divide-gray-200 dark:divide-gray-800">
             {habitsByCategory[cat]?.map((h) => (
               <HabitRow
                 key={h.id}
@@ -131,13 +131,13 @@ function HabitRow({ habit, value, onChange, score }: { habit: Habit; value: Habi
         <div className="flex items-center gap-2">
           <div className="font-medium truncate">{habit.title}</div>
           {habit.dailyMax != null && (
-            <span className="text-xs text-gray-500">max {habit.dailyMax}{habit.inputType === 'time_hours' ? 'h' : ''}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">max {habit.dailyMax}{habit.inputType === 'time_hours' ? 'h' : ''}</span>
           )}
           {habit.dailyPointsCap != null && (
-            <span className="text-xs text-gray-500">cap {habit.dailyPointsCap} pts/day</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">cap {habit.dailyPointsCap} pts/day</span>
           )}
         </div>
-        {habit.description && <div className="text-sm text-gray-500">{habit.description}</div>}
+        {habit.description && <div className="text-sm text-gray-500 dark:text-gray-400">{habit.description}</div>}
       </div>
 
       <div className="w-48">
@@ -150,7 +150,7 @@ function HabitRow({ habit, value, onChange, score }: { habit: Habit; value: Habi
         />
       </div>
 
-      <div className="w-24 text-right text-sm font-semibold text-sky-700">{Math.round(score)} pts</div>
+      <div className="w-24 text-right text-sm font-semibold text-sky-700 dark:text-sky-400">{Math.round(score)} pts</div>
     </div>
   )
 }
@@ -165,7 +165,7 @@ function HabitInput({ type, value, onValue, max, unitLabel }: { type: HabitInput
           checked={Boolean(value)}
           onChange={(e) => onValue(e.target.checked)}
         />
-        <span className="text-sm text-gray-700">Done</span>
+        <span className="text-sm text-gray-700 dark:text-gray-300">Done</span>
       </label>
     )
   }
@@ -175,7 +175,7 @@ function HabitInput({ type, value, onValue, max, unitLabel }: { type: HabitInput
     <div className="flex items-center gap-2">
       <input
         type="number"
-        className="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
+        className="w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
         min={0}
         max={max}
         step={step}
@@ -183,7 +183,7 @@ function HabitInput({ type, value, onValue, max, unitLabel }: { type: HabitInput
         placeholder={type === 'time_hours' ? '0.0' : '0'}
         onChange={(e) => onValue(e.target.value === '' ? 0 : Number(e.target.value))}
       />
-      {unitLabel && <span className="text-xs text-gray-500">{unitLabel}</span>}
+      {unitLabel && <span className="text-xs text-gray-500 dark:text-gray-400">{unitLabel}</span>}
     </div>
   )
 }
