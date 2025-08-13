@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from '../hooks/useLocalStorage'
-import { categories, exampleHabits } from '../data/habits'
+import { categories, habits as allHabits } from '../data/habits'
 
 interface OnboardingData {
   focus: string
@@ -60,7 +60,7 @@ export default function Onboarding() {
         <div>
           <div className="text-sm font-medium text-gray-700">Preferred habits</div>
           <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {exampleHabits.map((h) => (
+            {allHabits.map((h) => (
               <label key={h.id} className="flex items-center gap-2 rounded border p-2 cursor-pointer select-none">
                 <input
                   type="checkbox"

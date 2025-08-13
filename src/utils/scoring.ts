@@ -1,4 +1,4 @@
-import type { Habit } from '../data/habits'
+import type { Habit, ScoringRuleSpec } from '../data/habits'
 
 function parsePointsPer(rule: string): { pointsPer: number; unit: 'hour' | 'unit' | 'check' } {
   const normalized = rule.trim().toLowerCase()
@@ -13,30 +13,46 @@ function parsePointsPer(rule: string): { pointsPer: number; unit: 'hour' | 'unit
   return { pointsPer: 0, unit: 'check' }
 }
 
-export function calculateHabitScore(habit: Habit, value: number | boolean): number {
-  const { pointsPer, unit } = parsePointsPer(habit.scoringRule)
+function fromSpec(rule: ScoringRuleSpec): { pointsPer: number; unit: 'hour' | 'unit' | 'check' } {
+  switch (rule.type) {
+    case 'flat':
+      return { pointsPer: rule.points, unit: 'check' }
+    case 'per_hour':
+      return { pointsPer: rule.pointsPerHour, unit: 'hour' }
+    case 'per_unit':
+      return { pointsPer: rule.pointsPerUnit, unit: 'unit' }
+    default:
+      return { pointsPer: 0, unit: 'check' }
+  }
+}
 
+export function calculateHabitScore(habit: Habit, value: number | boolean): number {
+  const { pointsPer } = typeof habit.scoringRule === 'string' ? parsePointsPer(habit.scoringRule) : fromSpec(habit.scoringRule)
+
+  let score = 0
   if (habit.inputType === 'checkbox') {
     const isChecked = Boolean(value)
-    if (!isChecked) return 0
-    const flat = typeof habit.completedValue === 'number' ? habit.completedValue : pointsPer
-    return Math.max(0, Math.round(flat * 100) / 100)
+    if (isChecked) {
+      const flat = typeof habit.completedValue === 'number' ? habit.completedValue : pointsPer
+      score = flat
+    }
+  } else {
+    const numericValue = typeof value === 'number' ? value : 0
+    const factor = pointsPer
+    score = factor * numericValue
   }
 
-  const numericValue = typeof value === 'number' ? value : 0
-  const cappedValue = typeof habit.dailyMax === 'number' ? Math.min(numericValue, habit.dailyMax) : numericValue
-
-  if (habit.inputType === 'time_hours') {
-    const factor = unit === 'hour' ? pointsPer : pointsPer
-    const score = factor * cappedValue
-    return Math.max(0, Math.round(score * 100) / 100)
+  if (typeof habit.dailyPointsCap === 'number') {
+    score = Math.min(score, habit.dailyPointsCap)
   }
 
-  if (habit.inputType === 'unit_count') {
-    const factor = unit === 'unit' ? pointsPer : pointsPer
-    const score = factor * cappedValue
-    return Math.max(0, Math.round(score * 100) / 100)
+  if (typeof habit.dailyMax === 'number' && typeof value === 'number') {
+    // If dailyMax is provided for numeric inputs, cap the input first
+    const cappedInput = Math.min(value, habit.dailyMax)
+    const factor = pointsPer
+    const recalculated = habit.inputType === 'checkbox' ? score : factor * cappedInput
+    score = typeof habit.dailyPointsCap === 'number' ? Math.min(recalculated, habit.dailyPointsCap) : recalculated
   }
 
-  return 0
+  return Math.max(0, Math.round(score * 100) / 100)
 }
