@@ -88,12 +88,12 @@ export default function Habits() {
       </div>
 
       {categories.map((cat) => (
-        <div key={cat} className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm">
-          <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-800 font-medium flex items-center justify-between">
+        <div key={cat} className="glass rounded-lg">
+          <div className="px-4 py-2 border-b border-white/40 dark:border-gray-800/60 font-medium flex items-center justify-between">
             <span>{cat}</span>
             <span className="text-xs text-gray-500 dark:text-gray-400">{habitsByCategory[cat]?.length ?? 0} items</span>
           </div>
-          <div className="divide-y divide-gray-200 dark:divide-gray-800">
+          <div className="divide-y divide-white/40 dark:divide-gray-800/60">
             {habitsByCategory[cat]?.map((h) => (
               <HabitRow
                 key={h.id}
@@ -108,7 +108,7 @@ export default function Habits() {
       ))}
 
       <div className="flex items-center gap-3">
-        <button onClick={handleSubmitDay} className="inline-flex items-center rounded-md bg-sky-600 px-4 py-2 text-white hover:bg-sky-700 active:scale-[.99] transition">
+        <button onClick={handleSubmitDay} className="inline-flex items-center rounded-md bg-sky-600 px-4 py-2 text-white hover:bg-sky-700 active:scale-[.99] transition animate-float">
           Submit Daily Log
         </button>
       </div>
